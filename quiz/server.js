@@ -12,10 +12,6 @@ fs.readFile(path.resolve(__dirname, '../data/users.json'), function(err, data) {
   users = JSON.parse(data);
 })
 
-setTimeout(() => {
-  console.log(users);
-}, 5000);
-
 const addMsgToRequest = function (req, res, next) {
   if(users) {
     req.users = users;
@@ -43,7 +39,6 @@ app.get('/read/usernames', (req, res) => {
 });
 
 app.get('/read/username/:name', (req, res) => {
-  console.log(req.users)
   let user = req.users.find(function(user) {
     return user.username === req.params.name;
   });

@@ -28,14 +28,13 @@ const addMsgToRequest = function (req, res, next) {
   
 }
 
+app.use(addMsgToRequest);
+
 app.use(
   cors({origin: 'http://localhost:3000'})
 );
-app.use(addMsgToRequest);
 
 app.use('/read', readUsers);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use('/write', writeUsers);
 
 app.listen(port, () => {

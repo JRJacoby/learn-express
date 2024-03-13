@@ -64,7 +64,6 @@ const UserManagement = () => {
 
   const handleShowEmail = async () => {
     try {
-      console.log("Make it to handleShowEmail")
       const response = await axios.get(`http://localhost:8000/read/username/${searchUsername}`)
       console.log(response)
       const data = response.data;
