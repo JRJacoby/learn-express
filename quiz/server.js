@@ -12,6 +12,10 @@ fs.readFile(path.resolve(__dirname, '../data/users.json'), function(err, data) {
   users = JSON.parse(data);
 })
 
+setTimeout(() => {
+  console.log(users);
+}, 5000);
+
 const addMsgToRequest = function (req, res, next) {
   if(users) {
     req.users = users;
@@ -29,6 +33,7 @@ app.use(
   cors({origin: 'http://localhost:3000'})
 );
 app.use('/read/usernames', addMsgToRequest);
+app.use('/read/username', addMsgToRequest);
 
 app.get('/read/usernames', (req, res) => {
   let usernames = req.users.map(function(user) {
@@ -37,17 +42,18 @@ app.get('/read/usernames', (req, res) => {
   res.send(usernames);
 });
 
-app.get('/read/username/:user') , (req, res) => {
+app.get('/read/username/:name', (req, res) => {
+  console.log(req.users)
   let user = req.users.find(function(user) {
-    return user.username === req.params.user;
+    return user.username === req.params.name;
   });
   if(user) {
-    res.send(user);
+    res.send([user]);
   }
   else {
     res.status(404).send('User not found');
   }
-}
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
